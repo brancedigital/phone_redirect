@@ -6,16 +6,10 @@
 </head>
 <body>
   <p id="fallback">Redirecting...</p>
-
   <script>
-    const basePath = "/phone_redirect/";
-    const path = window.location.pathname;
-
-    let phone = path.startsWith(basePath) ? path.slice(basePath.length) : "";
-    phone = decodeURIComponent(phone).trim();
-
+    const phone = new URL(location.href).searchParams.get("n");
     if (phone) {
-      window.location.replace(`tel:${phone}`);
+      window.location.replace("tel:" + phone);
     } else {
       document.getElementById("fallback").textContent = "Missing phone number in URL.";
     }
