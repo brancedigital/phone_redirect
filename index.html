@@ -1,12 +1,24 @@
 <!doctype html>
 <html>
 <head>
-  <meta http-equiv="refresh" content="0; url=tel:+34123456789">
-  <script>
-    window.location.href = "tel:+34123456789";
-  </script>
+  <meta charset="utf-8">
+  <title>Phone Redirect</title>
 </head>
 <body>
-  <p><a href="tel:+34123456789">Call +34 123 456 789</a></p>
+  <p id="fallback">Redirecting...</p>
+
+  <script>
+    const basePath = "/phone_redirect/";
+    const path = window.location.pathname;
+
+    let phone = path.startsWith(basePath) ? path.slice(basePath.length) : "";
+    phone = decodeURIComponent(phone).trim();
+
+    if (phone) {
+      window.location.replace(`tel:${phone}`);
+    } else {
+      document.getElementById("fallback").textContent = "Missing phone number in URL.";
+    }
+  </script>
 </body>
 </html>
